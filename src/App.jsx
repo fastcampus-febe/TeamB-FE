@@ -1,12 +1,13 @@
-import { useState } from 'react';
 import { RecoilRoot } from 'recoil';
 import { Outlet } from 'react-router-dom';
-import './App.css';
+import Header from './components/layout/Header';
+import GlobalStyles from './global/globalStyles';
 
 function App() {
   return (
     <RecoilRoot>
-      <div>dsfsdf</div>
+      <Header />
+      <GlobalStyles />
       <Outlet />
     </RecoilRoot>
   );
