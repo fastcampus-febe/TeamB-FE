@@ -1,26 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { RiLoginCircleLine } from 'react-icons/Ri';
+import { Link, useLocation } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/Ai';
+import { kakaoLoad } from '@atom/loadAtom';
+import { useRecoilState } from 'recoil';
 
 const Header = () => {
+  const [test, setTest] = useRecoilState(kakaoLoad);
+  const [mainPath, setMainPath] = useState(false);
+  const { pathname } = useLocation();
+  console.log(pathname);
+
+  useEffect(() => {
+    if (!import.meta.env.VITE_KAKAO) return;
+    if (test) return;
+    if (pathname === '/') setMainPath(true);
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${
+      import.meta.env.VITE_KAKAO
+    }&autoload=false`;
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      kakao.maps.load(() => {
+        setTest(true);
+      });
+    };
+  }, [pathname]);
+
   return (
-    <Container>
+    <Container mainPath={mainPath}>
       <Inner>
         <Logo>
           <Link to={'/'}>
-            <img src="./src/assets/mainlogo.png" alt="logo" />
+            <img src="/assets/mainlogo.png" alt="logo" />
           </Link>
         </Logo>
         <Menu>
-          <Link to={'/'} className="like">
+          <Link to={'/wish'} className="wish">
             <AiFillHeart className="icon" />
-            <p>찜 목록</p>
+            <p>위시리스트</p>
           </Link>
           <Link to={'/'} className="mapage">
-            <RiLoginCircleLine className="icon" />
-            <p>로그인</p>
+            {/* <BiCoffee className="icon" /> */}
+            <p>후원하기</p>
           </Link>
         </Menu>
       </Inner>
@@ -32,7 +57,7 @@ const Container = styled.div`
   width: 100%;
   height: 65px;
   padding: 10px 0;
-  border-bottom: 2px solid #eee;
+  border-bottom: ${(props) => (props.pathname === '/' ? 'none' : '2px solid #eee')};
 `;
 
 const Inner = styled.div`
@@ -59,13 +84,18 @@ const Menu = styled.div`
   p {
     font-size: 14px;
     font-weight: 600;
-    padding-right: 20px;
     color: #676767;
   }
-  .mapage,
-  .like {
+  .login,
+  .wish {
     display: flex;
     align-items: center;
+    padding: 10px 15px;
+    border-radius: 10px;
+    :hover {
+      background-color: #f4f4f4;
+      transition: 0.2s;
+    }
     .icon {
       color: #2358c5;
       font-size: 20px;

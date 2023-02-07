@@ -1,0 +1,26 @@
+.searchPage {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #2358c5;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: rgba($color: #fff, $alpha: 0.4);
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+
+.wishPage {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  color: #2358c5;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
