@@ -4,18 +4,31 @@ import { AiTwotoneStar } from 'react-icons/ai';
 import WishIcon from '../../common/wishIcon/WishIcon';
 import { MdLocationPin } from 'react-icons/md';
 import { MdCall } from 'react-icons/md';
+import { MdImageNotSupported } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 const WishCard = ({ list }) => {
   return (
     <div className={styles.wrap}>
       <WishIcon className={styles.wishIcon} list={list} />
       <div className={styles.image}>
-        <img src={list.firstimage} alt={list.title + ' 사진'} />
+        <Link to={'/detail/' + list.contentid}>
+          {list.firstimage ? (
+            <img src={list.firstimage} alt={list.title + ' 사진'} />
+          ) : (
+            <div className={styles.noImage}>
+              <MdImageNotSupported size="84" color="#fff" />
+              <p>No Image</p>
+            </div>
+          )}
+        </Link>
       </div>
       <div className={styles.info}>
         <div className={styles.titleWrap}>
           <div>
-            <p className={styles.title}>{list.title}</p>
+            <Link to={'/detail/' + list.contentid}>
+              <p className={styles.title}>{list.title}</p>
+            </Link>
             <p className={styles.cat3}>
               #{list.cat3} #{list.inOut}
             </p>

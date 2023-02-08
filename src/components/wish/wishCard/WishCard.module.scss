@@ -24,9 +24,25 @@
   position: relative;
   justify-content: center;
   align-content: center;
+  background-color: #eee;
 
   img {
     height: 100%;
+  }
+
+  .noImage {
+    display: flex;
+    flex-flow: column;
+    margin-left: 8px;
+    margin-top: 20px;
+
+    p {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+    }
   }
 }
 
