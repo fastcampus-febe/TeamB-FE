@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { BiSearch } from 'react-icons/bi';
 import Lottie from 'lottie-react';
@@ -22,6 +23,11 @@ const Home = () => {
   const [locationList, setLocationList] = useState([]);
   const [location, setLocation] = useState('');
   const [areaCode, setAreaCode] = useState(0);
+  const navigate = useNavigate();
+
+  const handleSubmit = (location, areaCode) => {
+    return navigate(`/search?location=${location}&areacode=${areaCode}`);
+  };
 
   useEffect(() => {
     setLocationList(locationData);
@@ -88,12 +94,11 @@ const Home = () => {
             e.preventDefault();
           }}
         >
-          <input onClick={locationModal} defaultValue={location} type="text" />
+          <input onClick={locationModal} defaultValue={location} type="text" readOnly />
           <button
             aria-label="submit"
             onClick={() => {
-              handleSubmit(value, spaceCheck);
-              setValue('');
+              handleSubmit(location, areaCode);
             }}
           >
             <BiSearch size="26" color="#fff" />

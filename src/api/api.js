@@ -18,12 +18,22 @@ import { detailDummydata } from '@/data/dummydata';
 //   }
 // };
 
+// 키워드
 export const getKeyword = async (page, keyword) => {
   const sending = {
     pageno: page,
     keyword: keyword
   };
   return instance.get(`tourlist/keyword`, { params: { ...sending } });
+};
+
+// 지역
+export const getLocation = async (page, location) => {
+  const sending = {
+    pageno: page,
+    areacode: location
+  };
+  return instance.get(`tourlist/location`, { params: { ...sending } });
 };
 
 export const getDetails = async (detailId) => {

@@ -1,39 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FcInfo } from 'react-icons/fc';
-import { getKeyword } from '@api/api';
+import { getKeyword, getLocation } from '@api/api';
 import SearchCard from '@components/search/SearchCard';
 import PageTitle from '@components/common/PageTitle';
 import Pagination from '@components/common/pagination/Pagination';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const Search = () => {
-  const [keywordParams, setKeywordParams] = useSearchParams();
   const [page, setPage] = useState(1);
   const limit = 12;
   const offset = (page - 1) * limit;
   const [searchList, setSearchList] = useState([]);
   const [total, setTotal] = useState(0);
-  console.log(searchList);
-  console.log(keywordParams);
+  const [searchText, setSearchText] = useState('');
 
   const useQuery = () => {
     return new URLSearchParams(useLocation().search);
   };
 
-  let query = useQuery();
-  const searchKeyword = query.get('keyword');
-  console.log(searchKeyword);
+  // 쿼리 구분
+  let KeywordQuery = useQuery();
+  let locationQuery = useQuery();
+  let locationQueryText = useQuery();
+  const searchKeyword = KeywordQuery.get('keyword');
+  const searchLocation = locationQuery.get('areacode');
+  const searchLocationText = locationQueryText.get('location');
 
   useEffect(() => {
     if (searchKeyword) {
       getSearchKeyword(page, searchKeyword);
+      setSearchText(searchKeyword);
+    } else if (searchLocation) {
+      getSearchLocation(page, searchLocation);
+      setSearchText(searchLocationText);
     }
-  }, [searchKeyword]);
+  }, [searchKeyword, searchLocation]);
 
   const getSearchKeyword = async () => {
     try {
       const response = await getKeyword(page, searchKeyword);
+      setTotal(response.data.data.totalElements);
+      setSearchList(response.data.data.content);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getSearchLocation = async () => {
+    try {
+      const response = await getLocation(page, searchLocation);
       setTotal(response.data.data.totalElements);
       setSearchList(response.data.data.content);
     } catch (error) {
@@ -47,7 +63,7 @@ const Search = () => {
       {searchList.length > 0 ? (
         <>
           <h1>
-            <span>{searchKeyword}</span>에 대한 검색 결과입니다.
+            <span>{searchText}</span>에 대한 검색 결과입니다.
           </h1>
           <Inner>
             {searchList.slice(offset, offset + limit).map((list, idx) => {
@@ -59,7 +75,7 @@ const Search = () => {
         <NoList>
           <FcInfo size="40" />
           <h1>
-            <span>{searchKeyword}</span>에 대한 검색 결과가 없습니다.
+            <span>{searchText}</span>에 대한 검색 결과가 없습니다.
           </h1>
         </NoList>
       )}
