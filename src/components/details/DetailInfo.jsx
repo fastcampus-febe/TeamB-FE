@@ -128,7 +128,6 @@ const Essential = styled.ul`
 const Optional = styled.div`
   display: grid;
   width: 100%;
-  height: 2000px;
   flex-wrap: wrap;
   padding: 40px;
   align-content: flex-start;
