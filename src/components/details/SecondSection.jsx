@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import RootArticle from './RootArticle';
+import RootArticle from './WeatherArticle';
 
 import KakaoMap from './KakaoMap';
 import Review from './Review';
@@ -90,7 +90,7 @@ const SecondSection = ({ tour, gotoID }) => {
         ))}
       </Nav>
       <DetailInfo tour={tour} id={'more'} />
-      <RootArticle id={'weather'} />
+      <RootArticle id={'weather'} tour={tour} />
       <KakaoMap
         id={'mapData'}
         tour={{ addr1: tour.addr1, mapX: tour.mapx, mapY: tour.mapy, title: tour.title }}

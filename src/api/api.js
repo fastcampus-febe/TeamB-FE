@@ -22,7 +22,7 @@ import { detailDummydata } from '@/data/dummydata';
 export const getKeyword = async (page, keyword) => {
   const sending = {
     pageno: page,
-    keyword: keyword
+    keyword: keyword,
   };
   return instance.get(`tourlist/keyword`, { params: { ...sending } });
 };
@@ -31,7 +31,7 @@ export const getKeyword = async (page, keyword) => {
 export const getLocation = async (page, location) => {
   const sending = {
     pageno: page,
-    areacode: location
+    areacode: location,
   };
   return instance.get(`tourlist/location`, { params: { ...sending } });
 };
@@ -41,4 +41,12 @@ export const getDetails = async (detailId) => {
     contentid: detailId,
   };
   return instance.get(`tourlist/detail`, { params: { ...sending } });
+};
+
+export const getWeather = async (mapx, mapy) => {
+  const sending = {
+    mapX: mapx,
+    mapY: mapy,
+  };
+  return instance.get(`tourlist/weather`, { params: { ...sending } });
 };
