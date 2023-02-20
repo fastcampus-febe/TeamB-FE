@@ -18,5 +18,5 @@ export default defineConfig({
       { find: '@lottie', replacement: resolve(__dirname, 'src/lottie') },
     ],
   },
-  server: { https: true, host: 'localhost' },
+  //server: { https: true, host: 'localhost' },
 });
