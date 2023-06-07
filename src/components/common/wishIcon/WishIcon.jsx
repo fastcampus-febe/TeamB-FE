@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { AiFillHeart } from 'react-icons/Ai';
-import { AiOutlineHeart } from 'react-icons/Ai';
-import style from './WishIcon.module.scss';
+import { AiFillHeart } from 'react-icons/ai';
+import { AiOutlineHeart } from 'react-icons/ai';
+import styles from './WishIcon.module.scss';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { wishItemState } from '../../../Atoms/wishAtom.jsx';
 
@@ -19,6 +19,7 @@ const WishIcon = ({ list, isSearch }) => {
   };
 
   useEffect(() => {
+    console.log('wishIcon', 'useEffect');
     wishCheck();
   }, [wishItemList]);
 
@@ -39,6 +40,7 @@ const WishIcon = ({ list, isSearch }) => {
   };
 
   const removeItem = () => {
+    console.log('wishIcon', 'removeItem');
     const num = wishItemList.filter((obj) => {
       return obj.contentid !== list.contentid;
     });
@@ -46,11 +48,13 @@ const WishIcon = ({ list, isSearch }) => {
   };
 
   function handleInsertWish() {
+    console.log('wishIcon', 'handleInsertWish');
     insertItem();
     setWish((wish) => !wish);
   }
 
   function handleRemoveWish() {
+    console.log('wishIcon', 'handleRemoveWish');
     removeItem();
     setWish((wish) => !wish);
   }
@@ -59,12 +63,12 @@ const WishIcon = ({ list, isSearch }) => {
     <div>
       {wish ? (
         <AiFillHeart
-          className={`${isSearch ? style.searchPage : style.wishPage}`}
+          className={`${isSearch ? styles.searchPage : styles.wishPage}`}
           onClick={handleRemoveWish}
         />
       ) : (
         <AiOutlineHeart
-          className={`${isSearch ? style.searchPage : style.wishPage}`}
+          className={`${isSearch ? styles.searchPage : styles.wishPage}`}
           onClick={handleInsertWish}
         />
       )}

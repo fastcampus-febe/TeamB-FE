@@ -1,13 +1,13 @@
 .card {
   width: 100%;
   height: auto;
-  padding: 45px 15px;
-  z-index: 1;
+  margin: 45px 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-content: flex-start;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .image {
@@ -20,12 +20,28 @@
   margin-bottom: 15px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-content: center;
 
   img {
     height: 100%;
   }
 
+  .noImage {
+    display: flex;
+    flex-flow: column;
+    margin-left: 8px;
+    margin-top: 70px;
+
+    p {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      -webkit-user-select: none;
+      ;
+    }
+  }
 }
 
 .info {

@@ -1,36 +1,43 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const LocationModal = ({ locationList, onClose, BiSearch, navigate }) => {
-  const [location, setLocation] = useState('');
-  const [areaCode, setAreaCode] = useState(0);
-  const [active, setActive] = useState('0');
+const LocationModal = ({ hashtagList, onClose, BiSearch, navigate }) => {
+  const [hashtag, setHashtag] = useState([]);
+  const [hashTitle, setHashTitle] = useState('');
+  const [active, setActive] = useState('-1');
   const toggleActive = (e) => {
+    e.preventDefault();
     setActive(e.target.value);
   };
 
-  const handleSubmit = (location, areaCode) => {
-    return navigate(`/search?location=${location}&areacode=${areaCode}`);
+  const handleSubmit = (hashTitle, hashtag) => {
+    // http://{{host}}/tourlist/hashtag?pageno=1&size=12&hashtag=전통체험&hashtag=종교성지
+    let hashtagParams = '';
+    for (let i = 0; i < hashtag.length; i++) {
+      hashtagParams += '&hashtag=' + hashtag[i];
+    }
+    return navigate(`/search?hashTitle=${hashTitle}${hashtagParams}`);
   };
 
   return (
     <Container>
-      <h2>지역 선택</h2>
+      <h2>태그 선택</h2>
       <ul>
-        {Array.isArray(locationList)
-          ? locationList.map((item, idx) => {
+        {Array.isArray(hashtagList)
+          ? hashtagList.map((item, idx) => {
               return (
                 <li
-                  value={item.areacode}
-                  className={item.areacode == active ? 'active' : ''}
+                  value={idx}
+                  className={idx == active ? 'active' : ''}
                   onClick={(e) => {
                     toggleActive(e);
-                    setLocation(item.addr);
-                    setAreaCode(item.areacode);
+                    setHashTitle(item.title);
+                    setHashtag(item.hashtag);
+                    console.log(hashtag);
                   }}
                   key={idx}
                 >
-                  {item.addr}
+                  {item.title}
                 </li>
               );
             })
@@ -44,7 +51,8 @@ const LocationModal = ({ locationList, onClose, BiSearch, navigate }) => {
         <button
           aria-label="submit"
           onClick={() => {
-            handleSubmit(location, areaCode);
+            //const items = new Array(hashtag);
+            handleSubmit(hashTitle, hashtag);
             onClose();
           }}
         >

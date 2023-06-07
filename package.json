@@ -10,6 +10,7 @@
     "sync": "git switch develop && git pull upstream develop && npm i"
   },
   "dependencies": {
+    "@vitejs/plugin-basic-ssl": "^1.0.1",
     "axios": "^1.2.4",
     "lottie-react": "^2.3.1",
     "react": "^18.2.0",

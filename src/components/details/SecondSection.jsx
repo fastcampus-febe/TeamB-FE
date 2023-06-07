@@ -89,7 +89,7 @@ const SecondSection = ({ tour, gotoID }) => {
           </Link>
         ))}
       </Nav>
-      <DetailInfo tour={tour} />
+      <DetailInfo tour={tour} id={'more'} />
       <RootArticle id={'weather'} />
       <KakaoMap
         id={'mapData'}

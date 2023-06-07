@@ -91,6 +91,11 @@ const index = ({ tour }) => {
 
   function getFlags() {
     const flags = [];
+    flags.push(
+      <Flag key="tourType" color={'#1B5E20'}>
+        {tour.cat3}
+      </Flag>
+    );
     if (tour.inOut && tour.inOut.length > 0) {
       flags.push(
         <Flag key="inOut" color={'#E65100'}>
@@ -105,27 +110,28 @@ const index = ({ tour }) => {
         </Flag>
       );
     }
-    if (tour.heritage1 && tour.heritage1.length > 0) {
+    if (tour.heritage1 === '1' && tour.heritage1.length > 0) {
       flags.push(
         <Flag key="heritage1" color={'#880E4F'}>
-          {tour.heritage1}
+          세계기록유산
         </Flag>
       );
     }
-    if (tour.heritage2 && tour.heritage2.length > 0) {
+    if (tour.heritage2 === '1' && tour.heritage2.length > 0) {
       flags.push(
         <Flag key="heritage2" color={'#4A148C'}>
-          {tour.heritage2}
+          세계자연유산
         </Flag>
       );
     }
-    if (tour.heritage3 && tour.heritage3.length > 0) {
+    if (tour.heritage3 === '1' && tour.heritage3.length > 0) {
       flags.push(
         <Flag key="heritage3" color={'#311B92'}>
-          {tour.heritage3}
+          세계문화유산
         </Flag>
       );
     }
+
     return flags;
   }
 

@@ -4,7 +4,7 @@ import FirstSection from '@components/details/FirstSection';
 import SecondSection from '@components/details/SecondSection';
 import Test from '@components/details/Test';
 import { useLocation, useParams } from 'react-router-dom';
-import { getDetails } from '@/api/api';
+import { getDetails } from '@api/api';
 import { detailDummydata } from '../../data/dummydata';
 
 const DetailRoot = styled.div`

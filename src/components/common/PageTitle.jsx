@@ -13,6 +13,7 @@ const Container = styled.div`
   width: 100%;
   padding: 60px 15px 0 15px;
   margin-bottom: 30px;
+  box-sizing: border-box;
 `;
 
 const Inner = styled.div`
