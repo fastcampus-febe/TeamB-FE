@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const LocationModal = ({ locationList, setLocation, setAreaCode, onClose }) => {
+const LocationModal = ({ locationList, onClose, BiSearch, navigate }) => {
+  const [location, setLocation] = useState('');
+  const [areaCode, setAreaCode] = useState(0);
   const [active, setActive] = useState('0');
   const toggleActive = (e) => {
     setActive(e.target.value);
+  };
+
+  const handleSubmit = (location, areaCode) => {
+    return navigate(`/search?location=${location}&areacode=${areaCode}`);
   };
 
   return (
@@ -16,7 +22,7 @@ const LocationModal = ({ locationList, setLocation, setAreaCode, onClose }) => {
               return (
                 <li
                   value={item.areacode}
-                  className={item.areacode == active ? ' active' : ''}
+                  className={item.areacode == active ? 'active' : ''}
                   onClick={(e) => {
                     toggleActive(e);
                     setLocation(item.addr);
@@ -30,13 +36,22 @@ const LocationModal = ({ locationList, setLocation, setAreaCode, onClose }) => {
             })
           : null}
       </ul>
-      <button
-        onClick={() => {
-          onClose();
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
         }}
       >
-        선택완료
-      </button>
+        <button
+          aria-label="submit"
+          onClick={() => {
+            handleSubmit(location, areaCode);
+            onClose();
+          }}
+        >
+          검색하기
+          <BiSearch size="20" color="#fff" />
+        </button>
+      </form>
     </Container>
   );
 };
@@ -86,16 +101,26 @@ const Container = styled.div`
       }
     }
   }
-  button {
-    border: none;
-    width: 20vw;
-    height: 60px;
-    font-size: 16px;
-    background-color: #2358c5;
-    color: #fff;
-    border-radius: 10px;
-    margin: auto auto 0;
-    cursor: pointer;
+  form {
+    margin-top: auto;
+    button {
+      border: none;
+      width: 20vw;
+      height: 60px;
+      font-size: 16px;
+      background-color: #2358c5;
+      color: #fff;
+      border-radius: 10px;
+      margin: auto auto 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      svg {
+        margin-top: 3px;
+      }
+    }
   }
 `;
 

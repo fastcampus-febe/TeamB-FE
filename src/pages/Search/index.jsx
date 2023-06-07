@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FcInfo } from 'react-icons/fc';
-import { getKeyword, getLocation } from '@api/api';
+import { getKeyword, getLocation, getHashtag } from '@api/api';
 import SearchCard from '@components/search/SearchCard';
 import PageTitle from '@components/common/PageTitle';
 import Pagination from '@components/common/pagination/Pagination';
@@ -15,17 +15,15 @@ const Search = () => {
   const [total, setTotal] = useState(0);
   const [searchText, setSearchText] = useState('');
 
-  const useQuery = () => {
-    return new URLSearchParams(useLocation().search);
-  };
+  let params = new URLSearchParams(useLocation().search);
+  const hashParams = params.getAll('hashtag');
 
   // 쿼리 구분
-  let KeywordQuery = useQuery();
-  let locationQuery = useQuery();
-  let locationQueryText = useQuery();
-  const searchKeyword = KeywordQuery.get('keyword');
-  const searchLocation = locationQuery.get('areacode');
-  const searchLocationText = locationQueryText.get('location');
+  const searchKeyword = params.get('keyword');
+  const searchLocation = params.get('areacode');
+  const searchLocationText = params.get('location');
+  const searchHashtag = params.get('hashtag');
+  const searchHashtagTitle = params.get('hashTitle');
 
   useEffect(() => {
     if (searchKeyword) {
@@ -34,8 +32,11 @@ const Search = () => {
     } else if (searchLocation) {
       getSearchLocation(page, searchLocation);
       setSearchText(searchLocationText);
+    } else if (searchHashtag) {
+      getSearchHashtag(page, hashParams);
+      setSearchText(searchHashtagTitle);
     }
-  }, [searchKeyword, searchLocation]);
+  }, [searchKeyword, searchLocation, searchHashtag]);
 
   const getSearchKeyword = async () => {
     try {
@@ -50,6 +51,16 @@ const Search = () => {
   const getSearchLocation = async () => {
     try {
       const response = await getLocation(page, searchLocation);
+      setTotal(response.data.data.totalElements);
+      setSearchList(response.data.data.content);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getSearchHashtag = async () => {
+    try {
+      const response = await getHashtag(page, hashParams);
       setTotal(response.data.data.totalElements);
       setSearchList(response.data.data.content);
     } catch (error) {
