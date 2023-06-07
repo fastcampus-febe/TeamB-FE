@@ -36,6 +36,15 @@ export const getLocation = async (page, location) => {
   return instance.get(`tourlist/location`, { params: { ...sending } });
 };
 
+// 태그
+export const getHashtag = async (page, hashtag) => {
+  const sending = {
+    pageno: page,
+    hashtag: [...hashtag]
+  };
+  return instance.get(`tourlist/hashtag`, { params: { ...sending } });
+};
+
 export const getDetails = async (detailId) => {
   const sending = {
     contentid: detailId,
