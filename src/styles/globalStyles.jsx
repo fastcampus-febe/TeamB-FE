@@ -13,7 +13,7 @@ const GlobalStyles = createGlobalStyle`
   body {
     font-family: 'Roboto', sans-serif;
     background-color: #fff;
-    color: #0f0f0f
+    color: #0f0f0f;
   }
   ul, li {
     list-style: none;

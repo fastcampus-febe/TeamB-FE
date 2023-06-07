@@ -16,21 +16,19 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import HashTagModal from '@/components/modal/HashTagModal';
 import LocationModal from '@/components/modal/LocationModal';
 import locationData from '@/data/locationData';
+import hashtagData from '@/data/hashTagData';
 
 const Home = () => {
   const [locationList, setLocationList] = useState([]);
-  const [location, setLocation] = useState('');
-  const [areaCode, setAreaCode] = useState(0);
+  const [hashtagList, seHashtagList] = useState([]);
   const navigate = useNavigate();
-
-  const handleSubmit = (location, areaCode) => {
-    return navigate(`/search?location=${location}&areacode=${areaCode}`);
-  };
 
   useEffect(() => {
     setLocationList(locationData);
+    seHashtagList(hashtagData);
   }, []);
 
   const locationModal = () => {
@@ -40,8 +38,23 @@ const Home = () => {
           <LocationModal
             onClose={onClose}
             locationList={locationList}
-            setLocation={setLocation}
-            setAreaCode={setAreaCode}
+            BiSearch={BiSearch}
+            navigate={navigate}
+          />
+        );
+      },
+    });
+  };
+
+  const hashTagModal = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <HashTagModal
+            onClose={onClose}
+            hashtagList={hashtagList}
+            BiSearch={BiSearch}
+            navigate={navigate}
           />
         );
       },
@@ -87,24 +100,11 @@ const Home = () => {
         </SwiperSlide>
       </Swiper>
 
-      <Location>
-        <h1>어디로 가시겠어요?</h1>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <input onClick={locationModal} defaultValue={location} type="text" readOnly />
-          <button
-            aria-label="submit"
-            onClick={() => {
-              handleSubmit(location, areaCode);
-            }}
-          >
-            <BiSearch size="26" color="#fff" />
-          </button>
-        </form>
-      </Location>
+      <SearchChoice>
+        <h1>검색방법을 선택해주세요!</h1>
+        <button onClick={locationModal}>지역</button>
+        <button onClick={hashTagModal}>태그</button>
+      </SearchChoice>
     </Container>
   );
 };
@@ -115,39 +115,30 @@ const Container = styled.div`
   background-color: #fbfbfb;
 `;
 
-const Location = styled.div`
+const SearchChoice = styled.div`
   width: 80vw;
   margin: 20px auto 0;
   display: flex;
-  gap: 20px;
+  gap: 30px;
   h1 {
     font-family: SBAggroB;
-    font-size: 4.5vw;
+    font-size: 4vw;
+    margin-right: 30px;
   }
-  form {
-    display: flex;
-    gap: 20px;
-    input {
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 8px 16px 0 rgb(32 32 32 / 10%);
-      box-sizing: border-box;
-      padding: 0 20px;
-      margin-left: 30px;
-      height: 65px;
-      font-size: 20px;
-      &:focus {
-        outline: 2px solid #2358c5;
-      }
-    }
-    button {
-      background: #2358c5;
-      border: none;
-      width: 65px;
-      height: 65px;
-      border-radius: 15px;
-      box-shadow: 0 8px 16px 0 rgb(32 32 32 / 10%);
-      cursor: pointer;
+  button {
+    background-color: #2358c5;
+    border: none;
+    width: 120px;
+    height: 63px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px 0 rgb(32 32 32 / 10%);
+    cursor: pointer;
+    &:last-child {
+      background-color: #bacaea;
+      color: #0f0f0f;
     }
   }
 `;
